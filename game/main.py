@@ -12,25 +12,35 @@ async def main():
     screen: pygame.Surface = pygame.display.set_mode((1920, 1080))
     clock = pygame.time.Clock()
 
-    color_index = 0
 
     while True:
         for event in pygame.event.get():
             if not event.type == pygame.KEYUP:
                 continue
 
-            if event.key == pygame.K_d:
-                color_index = (color_index + 1) % len(COLORS)
-                new_color = COLORS[color_index]
+            current_row = 0
+            current_color = 0
+
+            if event.key == pygame.K_w:
+                current_row = (current_row - 1) % len(COLORS)
+                new_color = COLORS[current_row]
                 screen.fill(new_color)
                 pygame.display.update()
-
-            if event.key == pygame.K_a:
-                color_index = (color_index - 1) % len(COLORS)
-                new_color = COLORS[color_index]
+            elif event.key == pygame.K_s:
+                current_row = (current_row + 1) % len(COLORS)
+                new_color = COLORS[current_row]
                 screen.fill(new_color)
                 pygame.display.update()
-
+            elif event.key == pygame.K_a:
+                current_color = (current_color - 1) % len(COLORS[current_row])
+                new_color = COLORS[current_color]
+                screen.fill(new_color)
+                pygame.display.update()
+            elif event.key == pygame.K_d:
+                current_color = (current_color + 1) % len(COLORS[current_row])
+                new_color = COLORS[current_color]
+                screen.fill(new_color)
+                pygame.display.update()
 
             if event.key == pygame.K_ESCAPE:
                 pygame.quit()
